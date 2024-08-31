@@ -38,7 +38,7 @@ small_font_cfg = dict(
 
 def base_cfg(name: str):
     return GeneratorCfg(
-        num_image=5,
+        num_image=1,
         save_dir=CURRENT_DIR / "effect_layout_image" / name,
         render_cfg=RenderCfg(
             bg_dir=BG_DIR,
@@ -215,18 +215,18 @@ def emboss():
 
 
 configs = [
-    # bg_and_text_mask()
-    emboss()
-    # vertical_text()
-    # extra_text_line_layout()
+    # bg_and_text_mask(),
+    emboss(),
+    # vertical_text(),
+    extra_text_line_layout(),
     # char_spacing_compact(),
     # char_spacing_large(),
-    # *line(),
+    *line(),
     # perspective_transform(),
-    # color_image(),
-    # dropout_rand(),
-    # dropout_horizontal(),
-    # dropout_vertical(),
-    # padding(),
-    # same_line_layout_different_font_size(),
+    color_image(),
+    dropout_rand(),
+    dropout_horizontal(),
+    dropout_vertical(),
+    padding(),
+    same_line_layout_different_font_size(),
 ]
