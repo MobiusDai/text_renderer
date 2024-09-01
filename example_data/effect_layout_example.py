@@ -27,6 +27,7 @@ BG_DIR = CURRENT_DIR / "bg"
 
 font_cfg = dict(
     font_dir=CURRENT_DIR / "font",
+    font_list_file=CURRENT_DIR / 'font_list' / "font_list.txt",
     font_size=(30, 31),
 )
 
@@ -58,8 +59,8 @@ def base_cfg(name: str):
 from functools import partial
 
 def base_cfg_(style: str, output_dir: str, text_content: list):
-    num_image = len(text_content)
-    save_dir = Path(output_dir) / output_dir / style
+    num_image = len(text_content) * 10
+    save_dir = CURRENT_DIR / output_dir / style
 
     return GeneratorCfg(
         num_image=num_image,
@@ -237,39 +238,53 @@ def emboss():
     )
     return cfg
 
+def normal():
+    cfg = base_cfg(inspect.currentframe().f_code.co_name)
+    return cfg
+
+
+'''
+# 可用的configs配置
+configs = [
+    emboss(),
+    extra_text_line_layout(),
+    *line(),
+    color_image(),
+    dropout_rand(),
+    dropout_horizontal(),
+    dropout_vertical(),
+    padding(),
+    same_line_layout_different_font_size(),
+]
+'''
 
 
 
-### 可用的configs配置
-# configs = [
-#     emboss(),
-#     extra_text_line_layout(),
-#     *line(),
-#     color_image(),
-#     dropout_rand(),
-#     dropout_horizontal(),
-#     dropout_vertical(),
-#     padding(),
-#     same_line_layout_different_font_size(),
-# ]
+### 开始配置
 
+# 设置生成图片的文件夹名称， text_image_dir = "example"
 text_image_dir = "example"
+
+# 设置要生成的文本内容，存入到text_content里面
 text_content = []
 with open('example_data/text/chn_text.txt', 'r') as f:
-    for line in f:
-        text_content.extend(line.strip().split('，'))
+    for line_ in f:
+        text_content.extend(line_.strip().split('，'))
 print(text_content)
+
+### 结束配置
 
 base_cfg = partial(base_cfg_, output_dir=text_image_dir, text_content=text_content)
 
 configs = [
-    # emboss(),
-    # extra_text_line_layout(),
+    normal(),
+    emboss(),
+    extra_text_line_layout(),
     *line(),
-    # color_image(),
-    # dropout_rand(),
-    # dropout_horizontal(),
-    # dropout_vertical(),
-    # padding(),
-    # same_line_layout_different_font_size(),
+    color_image(),
+    dropout_rand(),
+    dropout_horizontal(),
+    dropout_vertical(),
+    padding(),
+    same_line_layout_different_font_size(),
 ]
