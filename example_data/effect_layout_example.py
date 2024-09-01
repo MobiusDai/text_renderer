@@ -35,16 +35,40 @@ small_font_cfg = dict(
     font_size=(20, 21),
 )
 
-
+'''
+# original base config
 def base_cfg(name: str):
     return GeneratorCfg(
-        num_image=1,
+        num_image=2,
         save_dir=CURRENT_DIR / "effect_layout_image" / name,
         render_cfg=RenderCfg(
             bg_dir=BG_DIR,
             corpus=EnumCorpus(
                 EnumCorpusCfg(
-                    items=["Hello! 你好！"],
+                    items=["Hello! 你好！", "ABCDEF"],
+                    text_color_cfg=FixedTextColorCfg(),
+                    **font_cfg,
+                ),
+            ),
+        ),
+    )
+'''
+
+
+from functools import partial
+
+def base_cfg_(style: str, output_dir: str, text_content: list):
+    num_image = len(text_content)
+    save_dir = Path(output_dir) / output_dir / style
+
+    return GeneratorCfg(
+        num_image=num_image,
+        save_dir=save_dir,
+        render_cfg=RenderCfg(
+            bg_dir=BG_DIR,
+            corpus=EnumCorpus(
+                EnumCorpusCfg(
+                    items=text_content,
                     text_color_cfg=FixedTextColorCfg(),
                     **font_cfg,
                 ),
@@ -214,19 +238,38 @@ def emboss():
     return cfg
 
 
+
+
+### 可用的configs配置
+# configs = [
+#     emboss(),
+#     extra_text_line_layout(),
+#     *line(),
+#     color_image(),
+#     dropout_rand(),
+#     dropout_horizontal(),
+#     dropout_vertical(),
+#     padding(),
+#     same_line_layout_different_font_size(),
+# ]
+
+text_image_dir = "example"
+text_content = []
+with open('example_data/text/chn_text.txt', 'r') as f:
+    for line in f:
+        text_content.extend(line.strip().split('，'))
+print(text_content)
+
+base_cfg = partial(base_cfg_, output_dir=text_image_dir, text_content=text_content)
+
 configs = [
-    # bg_and_text_mask(),
-    emboss(),
-    # vertical_text(),
-    extra_text_line_layout(),
-    # char_spacing_compact(),
-    # char_spacing_large(),
+    # emboss(),
+    # extra_text_line_layout(),
     *line(),
-    # perspective_transform(),
-    color_image(),
-    dropout_rand(),
-    dropout_horizontal(),
-    dropout_vertical(),
-    padding(),
-    same_line_layout_different_font_size(),
+    # color_image(),
+    # dropout_rand(),
+    # dropout_horizontal(),
+    # dropout_vertical(),
+    # padding(),
+    # same_line_layout_different_font_size(),
 ]
