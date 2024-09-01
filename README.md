@@ -17,8 +17,21 @@ pip install -r docker/requirements.txt
 运行示例：
 ```
 bash update.sh
+```
 
-# 生成的图片在example文件夹下，每个子文件夹为一个字体风格，每个字体风格下有n张图片，图片间字体各不相同。
+```
+生成的图片在example文件夹下，每个子文件夹为一个字体风格，每个字体风格下有n张图片，图片间字体各不相同。
+example
+├── normal
+│ └── images
+│      ├── 000000000.jpg
+│      ├── 000000001.jpg
+│      ├── ...
+├── emboss
+  └── images
+       ├── 000000000.jpg
+       ├── 000000001.jpg
+       ├── ...
 ```
 
 使用自己的内容进行生成：
