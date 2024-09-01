@@ -49,6 +49,8 @@ with open('example_data/text/chn_text.txt', 'r') as f:
         text_content.extend(line_.strip().split('，'))
 print(text_content)
 ```
+
+修改后运行 `bash update.sh` 即可生成新的图片。
 ---
 ### 以下是原项目readme
 
