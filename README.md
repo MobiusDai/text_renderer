@@ -1,4 +1,44 @@
 # Text Renderer
+
+
+## 生成不同字体风格的文本图片
+克隆项目: 
+```
+git clone https://github.com/MobiusDai/text_renderer.git
+```
+
+安装依赖:
+```
+cd text_renderer
+python3 setup.py develop
+pip install -r docker/requirements.txt
+```
+
+example：
+```
+bash update.sh
+```
+
+生成的图片在example文件夹下，每个子文件夹为一个字体风格，每个字体风格下有n张图片，图片间字体各不相同。
+
+使用自己的内容进行生成：
+```
+# text_renderer/example_data/effect_layout_example.py
+# line 263-275
+
+# 设置生成图片的文件夹名称， text_image_dir = "example"
+text_image_dir = "example"
+
+# 设置要生成的文本内容，存入到text_content列表里面，此处读取了一个txt文件
+text_content = []
+with open('example_data/text/chn_text.txt', 'r') as f:
+    for line_ in f:
+        text_content.extend(line_.strip().split('，'))
+print(text_content)
+```
+---
+### 以下是原项目readme
+
 Generate text line images for training deep learning OCR model (e.g. [CRNN](https://github.com/bgshih/crnn)). ![example](./image/example.gif)
 
 - [x] Modular design. You can easily add different components: [Corpus](https://oh-my-ocr.github.io/text_renderer/corpus/index.html), [Effect](https://oh-my-ocr.github.io/text_renderer/effect/index.html), [Layout](https://oh-my-ocr.github.io/text_renderer/layout/index.html).
@@ -20,7 +60,9 @@ Run following command to generate images using example data:
 git clone https://github.com/oh-my-ocr/text_renderer
 cd text_renderer
 python3 setup.py develop
+
 pip3 install -r docker/requirements.txt
+
 python3 main.py \
     --config example_data/example.py \
     --dataset img \
